@@ -1,0 +1,8 @@
+Library/
+Logs/
+Packages/
+ProjectSettings/
+Temp/
+UserSettings/
+.vsconfig
+MLAgents Jumper Exercise.sln
