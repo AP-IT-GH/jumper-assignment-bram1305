@@ -225,6 +225,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 508635400196801781, guid: 150dd9ac9210c4246b5c969c170a24ba, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -10
+      objectReference: {fileID: 0}
     - target: {fileID: 821365348525388153, guid: 150dd9ac9210c4246b5c969c170a24ba, type: 3}
       propertyPath: DecisionPeriod
       value: 10
@@ -235,7 +239,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1782474129058716590, guid: 150dd9ac9210c4246b5c969c170a24ba, type: 3}
       propertyPath: m_BehaviorType
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1782474129058716590, guid: 150dd9ac9210c4246b5c969c170a24ba, type: 3}
+      propertyPath: m_BrainParameters.VectorObservationSize
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1782474129058716590, guid: 150dd9ac9210c4246b5c969c170a24ba, type: 3}
       propertyPath: m_BrainParameters.VectorActionSize.Array.size
@@ -262,12 +270,20 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2024164380535885091, guid: 150dd9ac9210c4246b5c969c170a24ba, type: 3}
+      propertyPath: jumpForce
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2024164380535885091, guid: 150dd9ac9210c4246b5c969c170a24ba, type: 3}
       propertyPath: SpeedMultiplier
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2024164380535885091, guid: 150dd9ac9210c4246b5c969c170a24ba, type: 3}
       propertyPath: RotationMultiplier
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2353834064408196766, guid: 150dd9ac9210c4246b5c969c170a24ba, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2840161982481563840, guid: 150dd9ac9210c4246b5c969c170a24ba, type: 3}
       propertyPath: m_BehaviorName
@@ -279,15 +295,51 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2840161982481563840, guid: 150dd9ac9210c4246b5c969c170a24ba, type: 3}
       propertyPath: m_BrainParameters.VectorActionSize.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2840161982481563840, guid: 150dd9ac9210c4246b5c969c170a24ba, type: 3}
       propertyPath: m_BrainParameters.m_ActionSpec.m_NumContinuousActions
-      value: 2
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2892650932503507142, guid: 150dd9ac9210c4246b5c969c170a24ba, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3211386971649088021, guid: 150dd9ac9210c4246b5c969c170a24ba, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717234837141326921, guid: 150dd9ac9210c4246b5c969c170a24ba, type: 3}
+      propertyPath: m_Constraints
+      value: 122
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717234837141326921, guid: 150dd9ac9210c4246b5c969c170a24ba, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4717234837141326921, guid: 150dd9ac9210c4246b5c969c170a24ba, type: 3}
       propertyPath: m_IsKinematic
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4717234837141326921, guid: 150dd9ac9210c4246b5c969c170a24ba, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5301665633587604450, guid: 150dd9ac9210c4246b5c969c170a24ba, type: 3}
+      propertyPath: endX
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5301665633587604450, guid: 150dd9ac9210c4246b5c969c170a24ba, type: 3}
+      propertyPath: speed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5301665633587604450, guid: 150dd9ac9210c4246b5c969c170a24ba, type: 3}
+      propertyPath: startX
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6063562665747753041, guid: 150dd9ac9210c4246b5c969c170a24ba, type: 3}
+      propertyPath: m_Constraints
+      value: 124
       objectReference: {fileID: 0}
     - target: {fileID: 6578512108113597516, guid: 150dd9ac9210c4246b5c969c170a24ba, type: 3}
       propertyPath: m_LocalPosition.x
@@ -329,7 +381,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2840161982481563840, guid: 150dd9ac9210c4246b5c969c170a24ba, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

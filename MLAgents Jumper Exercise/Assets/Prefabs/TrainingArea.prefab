@@ -150,9 +150,11 @@ GameObject:
   - component: {fileID: 1517196086189161862}
   - component: {fileID: 3806424979291571674}
   - component: {fileID: 1656508883409552281}
+  - component: {fileID: 5301665633587604450}
+  - component: {fileID: 6063562665747753041}
   m_Layer: 0
   m_Name: Obstacle
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -166,7 +168,7 @@ Transform:
   m_GameObject: {fileID: 4916148174099209350}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.14, y: 0.5, z: 0}
+  m_LocalPosition: {x: -5, y: 0.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 20}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -200,7 +202,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 637dfcc21f401aa41a015a4ea24f71ae, type: 2}
+  - {fileID: 2100000, guid: bdd08097f9d8ae14b8659222c4d89f49, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -243,6 +245,49 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5301665633587604450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4916148174099209350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a338126a48cd5074284c1c90e30f56bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startX: -5
+  endX: 5
+  speed: 3
+  targetAgent: {fileID: 2024164380535885091}
+--- !u!54 &6063562665747753041
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4916148174099209350}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &6356723656877126411
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,7 +344,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1749284801586808436, guid: 43fa1baf3b2560442a51dc3bad56ca13, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 1749284801586808436, guid: 43fa1baf3b2560442a51dc3bad56ca13, type: 3}
       propertyPath: m_LocalRotation.x
@@ -307,11 +352,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1749284801586808436, guid: 43fa1baf3b2560442a51dc3bad56ca13, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 1749284801586808436, guid: 43fa1baf3b2560442a51dc3bad56ca13, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1749284801586808436, guid: 43fa1baf3b2560442a51dc3bad56ca13, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -319,7 +364,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1749284801586808436, guid: 43fa1baf3b2560442a51dc3bad56ca13, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 270
       objectReference: {fileID: 0}
     - target: {fileID: 1749284801586808436, guid: 43fa1baf3b2560442a51dc3bad56ca13, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -357,6 +402,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1749284801586808436, guid: 43fa1baf3b2560442a51dc3bad56ca13, type: 3}
   m_PrefabInstance: {fileID: 4101876415674314986}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &3211386971649088021 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1476593202179336959, guid: 43fa1baf3b2560442a51dc3bad56ca13, type: 3}
+  m_PrefabInstance: {fileID: 4101876415674314986}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5977203118772880638 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7646971770834088980, guid: 43fa1baf3b2560442a51dc3bad56ca13, type: 3}
@@ -387,7 +437,7 @@ MonoBehaviour:
   m_Model: {fileID: 0}
   m_InferenceDevice: 0
   m_BehaviorType: 0
-  m_BehaviorName: My Behavior
+  m_BehaviorName: JumperAgent
   TeamId: 0
   m_UseChildSensors: 1
   m_UseChildActuators: 1
@@ -408,11 +458,17 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
-  Obstacle: {fileID: 4916148174099209350}
-  Floor: {fileID: 2892650932503507142}
-  SpeedMultiplier: 0.1
-  RotationMultiplier: 0.1
-  JumpForce: 5
+  jumpForce: 10
+  groundCheck: {fileID: 3211386971649088021}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  groundCheckRadius: 0.1
+  obstacleController: {fileID: 5301665633587604450}
+  obstacleTransform: {fileID: 508635400196801781}
+  touchPunishment: -1
+  successReward: 1
+  stepPenalty: -0.001
 --- !u!114 &2840161982481563840
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -426,19 +482,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 1
+    VectorObservationSize: 0
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 0
-      BranchSizes: 01000000
-    VectorActionSize: 01000000
+      BranchSizes: 02000000
+    VectorActionSize: 02000000
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
   m_Model: {fileID: 0}
   m_InferenceDevice: 0
-  m_BehaviorType: 0
-  m_BehaviorName: My Behavior
+  m_BehaviorType: 1
+  m_BehaviorName: JumperAgent
   TeamId: 0
   m_UseChildSensors: 1
   m_UseChildActuators: 1
@@ -471,10 +527,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SensorName: RayPerceptionSensor
   m_DetectableTags: []
-  m_RaysPerDirection: 3
+  m_RaysPerDirection: 6
   m_MaxRayDegrees: 70
-  m_SphereCastRadius: 0.5
-  m_RayLength: 20
+  m_SphereCastRadius: 0.03
+  m_RayLength: 39
   m_RayLayerMask:
     serializedVersion: 2
     m_Bits: 4294967291
