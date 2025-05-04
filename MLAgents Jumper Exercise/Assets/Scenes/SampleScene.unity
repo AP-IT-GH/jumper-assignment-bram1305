@@ -239,7 +239,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1782474129058716590, guid: 150dd9ac9210c4246b5c969c170a24ba, type: 3}
       propertyPath: m_BehaviorType
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1782474129058716590, guid: 150dd9ac9210c4246b5c969c170a24ba, type: 3}
       propertyPath: m_BrainParameters.VectorObservationSize
@@ -336,6 +336,14 @@ PrefabInstance:
     - target: {fileID: 5301665633587604450, guid: 150dd9ac9210c4246b5c969c170a24ba, type: 3}
       propertyPath: startX
       value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5301665633587604450, guid: 150dd9ac9210c4246b5c969c170a24ba, type: 3}
+      propertyPath: maxSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5301665633587604450, guid: 150dd9ac9210c4246b5c969c170a24ba, type: 3}
+      propertyPath: minSpeed
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6063562665747753041, guid: 150dd9ac9210c4246b5c969c170a24ba, type: 3}
       propertyPath: m_Constraints
