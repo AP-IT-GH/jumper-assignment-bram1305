@@ -118,6 +118,14 @@ Om een zo optimaal mogelijke curve te bekomen experimenteerde ik wat met de beha
 
 
 Ik plaatste 6 trainingsomgevingen boven elkaar.
+En trainingsomgeving bestaat uit een empty gameobject als parent, met als child objects een Floor object, dat aan een custom layer 'Ground' wordt toegevoegd; een Agent object; een ObstacleSpawner (empty) object; een ObstacleSpawnPoint (empty) object, dit object wordt geplaatst waar het obstacle ingespawned moet worden.
+
+De Agent is een cube object met een empty gameobject GroundCheck, dat net onder het onderste vlak van de cube staat. De Agent krijgt een box collider en een rigidbody (met freeze position x en z, en freeze rotation x, y en z.).
+Het JumperAgent.cs script wordt toegevoegd aan de agent en we selecteren bij Ground Layer de custom layer 'Ground', en bij Ground Check voegen we het GroundCheck gameobject toe. Ik zette de max steps op 2000.
+
+We hebben ook een obstacle prefab. Aan het obstacle hangt het ObstacleController.cs script.
+
+Aan het ObstacleSpawner object voegen we het ObstacleSpawner.cs script toe.
 
 
 ##  Resultaten en conclusies
@@ -125,4 +133,4 @@ Ik plaatste 6 trainingsomgevingen boven elkaar.
 
 We zien dat de grafieken wel degelijk steigen, maar er zit wel een instabiliteit in. Deze instabiliteit lijkt op een soort ruis die mee steigt met de grafiek.
 Vermoedelijk komt de instabiliteit door, ondar andere, twee obstakels die elkaar kort opvolgen, waardoor de agent, die rays gebruikt om de omgeving te observeren, het tweede obstakel niet ziet aankomen en geen correcte timing van de jump kan inschatten.
-De instabileit is waarschijnlijk ook te danken aan het feit dat een episode enkel eindigt wanneer de agent een obstakel aanraakt. Dit zorgt ervoor dat we de agent moeten belonen voor het overleven, wat moeilijker is dan gewoon de episode te beëindigen wanneer het obstakel op zijn bestemming komt zonder collision.
+De instabileit is waarschijnlijk ook te danken aan het feit dat een episode enkel eindigt wanneer de agent een obstakel aanraakt. Dit zorgt ervoor dat we de agent moeten belonen voor het overleven, wat moeilijker is dan gewoon de episode te beëindigen wanneer het obstakel op zijn bestemming komt zonder collision. We kunnen dus stellen dat, ondanks de houterige training, de agent wel bijleert, langzaam maar zeker. Een video van de training kan gevonden worden in de assets directory (ik kreeg geen toegang tot de panopto directory).
