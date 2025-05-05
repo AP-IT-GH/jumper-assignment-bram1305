@@ -13,14 +13,10 @@ public class JumperAgent : Agent
     [SerializeField] private LayerMask groundLayer; // Set this to layer ground plane is on
     [SerializeField] private float groundCheckRadius = 0.1f;
 
-    [Header("References")]
-    [SerializeField] private ObstacleController obstacleController; // Assign Obstacle with ObstacleController script
-    [SerializeField] private Transform obstacleTransform; // Assign Obstacle Transform
 
     [Header("Rewards")]
     [SerializeField] private float touchPunishment = -1.0f;
-    [SerializeField] private float successReward = 1.0f;
-    [SerializeField] private float stepPenalty = -0.001f; // Small penalty per step to encourage faster jumps
+    [SerializeField] private float survivalReward = 0.001f;
 
     private Rigidbody rb;
     private Vector3 initialPosition;
@@ -35,14 +31,6 @@ public class JumperAgent : Agent
         {
             Debug.LogError("GroundCheck transform is not assigned!", this);
         }
-        if (obstacleController == null)
-        {
-            Debug.LogError("ObstacleController is not assigned!", this);
-        }
-        if (obstacleTransform == null)
-        {
-            Debug.LogError("Obstacle Transform is not assigned!", this);
-        }
     }
 
     public override void OnEpisodeBegin()
@@ -52,14 +40,15 @@ public class JumperAgent : Agent
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
 
-        // Reset Obstacle via its controller
-        if (obstacleController != null)
+        // Cleanup obstacles from previous episode
+        ObstacleController[] obstaclesInChildren = GetComponentsInChildren<ObstacleController>();
+        foreach (ObstacleController obstacleController in obstaclesInChildren)
         {
-            obstacleController.ResetObstacle();
-        }
-        else
-        {
-            Debug.LogError("ObstacleController is null on Episode Begin!", this);
+            // Make sure we don't destroy the prefab itself if it's somehow a child
+            if (obstacleController.gameObject != null && obstacleController.gameObject.CompareTag("Obstacle"))
+            {
+                Destroy(obstacleController.gameObject);
+            }
         }
     }
 
@@ -68,8 +57,8 @@ public class JumperAgent : Agent
     public override void CollectObservations(VectorSensor sensor)
     {
         // Example Optional Observations (Uncomment if needed):
-        // sensor.AddObservation(isGrounded); // Agent knows if it can jump (1 bool = 1 obs value)
-        // sensor.AddObservation(rb.velocity.y); // Agent knows its vertical speed
+        sensor.AddObservation(isGrounded); // Agent knows if it can jump (1 bool = 1 obs value)
+        sensor.AddObservation(rb.velocity.y /10f); // Agent knows its vertical speed
         // sensor.AddObservation(transform.localPosition.y); // Agent knows its height
 
         // Ray Perception Sensor component will add its observations automatically.
@@ -95,7 +84,7 @@ public class JumperAgent : Agent
             }
 
         }
-
+        AddReward(survivalReward); // Add reward for surviving step
         // Apply small penalty for existing to encourage efficiency
         // AddReward(stepPenalty);
     }
@@ -117,14 +106,6 @@ public class JumperAgent : Agent
             AddReward(touchPunishment);
             EndEpisode(); // End episode immediately on failure
         }
-    }
-
-    // Called by ObstacleController when end reached succesfully
-    public void ObstacleReachedEnd()
-    {
-        Debug.Log("Obstacle reached end successfully - Rewarding and Ending Episode.");
-        AddReward(successReward);
-        EndEpisode(); // End episode on success
     }
 
     // Gizmo: visualize ground check sphere in editor
