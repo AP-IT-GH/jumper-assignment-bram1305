@@ -380,7 +380,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 0
+  MaxStep: 2000
   jumpForce: 5
   groundCheck: {fileID: 6005738617602308994}
   groundLayer:
