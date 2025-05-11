@@ -1,88 +1,52 @@
-#  Jumper agent experiment
+# JumperAgent Performance analyse
 
 
-Voor deze opdracht maakte ik een jumper agent. Mijn agent springt om obstakels te ontwijken.
-Deze obstakels worden continue ingespawned en krijgen elks een andere, random snelheid.
+Het doel van het project is om een agent aan te leren om over obstakels te springen. Deze obstakels volgen elkaar continue op met variabele snelheid en interval.
 
 
-##  Set-up
+## Setup
 
 
-###  Scripts
+### Scripts
 
 
-Om het project efficiënt, maar overzichtelijk, te maken, splitste ik het op in 3 scripts.
+We gebruiken 3 scripts om de omgeving te en de agent te laten werken.
 
 
-####  ObstacleSpawner.cs
+###### JumperAgent.cs
+
+Dit script implementeert de logica achter de agent.
+Observations:
+    isGrounded: observeert of de agent op de grond staat. Zo niet, dan kan de agent niet springen.
+    rb.velicty.y / 10f: observeert de verticale snelheid.
+Actions:
+    We hebben een enkele discrete actie met twee branches:
+        0: niets doen.
+        1: springen (indien de agent op de grond staat), een opwaartse kracht uitvoeren.
+Rewards:
+    touchPunishment: een straf wordt gegeven wanneer de agent een obstakel aanraakt.
+    obstacleClearedReward: een beloning wordt gegeven wanneer een obstakel met success wordt gepasseerd.
+De episode wordt beëindigd wanneer de agent 3 obstakels geraakt heeft. We willen de agent meer kansen geven, aangezien deze anders nooit de kans zal krijgen om te leren dat het ontwijken van een obstakel een beloning oplevert.
+Bij het begin van elke episode wordt de currentCollisions gereset naar wordt een instructie gestuurd naar de ObstacleSpawner om alle oude obstakels te verwijderen.
 
 
-Dit script spawned nieuwe obstakels met random intervallen.
-
-Start():
-    Checkt of de vereiste objecten zijn gerefereerd in de inspector.
-    Valideert de interval waarden voor het spawnen.
-    Initializeert de timer zodat de eerste spawn pas na een door de developer ingestelde delay gebeurt.
-
-Update():
-    Als de eerste spawn nog niet gebeurd is en de timer bereikt 0, roept deze functie SpawnObstacle() aan en berekent het interval voor de volgende spawn.
-    Voor reguliere spawns: als de timer op de currentSpawnInterval staat, roept deze functie SpawnObstacle() aan, de timere wordt gerest en het interval voor de volgende spawn wordt berekend.
-
-SetNextSpawnInterval():
-    Helper functie die de pseudo-random-wachttijd voor de volgende spawn berekent.
-
-SpawnObstacle():
-    Spawned een nieuwe instantie van het obstakel prefab m.b.v. Instantiate().
-    Plaatst het nieuwe obstakel op de exacte positie van het empty gameobject SpawnPoint.
-
-ResetSpawner():
-    Een publieke functie die gebruikt kan worden om de timing logic van de spawner te resetten. (Wordt momenteel niet direct aangeroepen door de andere scripts.).
-    Vernietigt geen bestaande obstakels.
+###### ObstacleSpawner.cs
 
 
-####  ObstacleController.cs
+Dit script beheert het spawning systeem van de obstakels.
+Het script spawnt obstakels op een gespecifiëerd spawnPoint met een random timing tussen minSpawnInterval en maxSpawnInterval na een initialSpawnDelay.
+Wanneer een obstakel gespawned wordt, zal de agent langs deze weg de obstakels volgen om melding te krijgen wanneer een obstakel het eindpunt bereikte. Hierdoor kan de agent beloond worden.
+De ResetSpawner en ClearObstacles methoden worden door de agent aangeroepen bij OnEpisodeBegin.
 
 
-Dit script bestuurt het gedrag van een obstakel nadat het gespawned werd.
-
-Start():
-    Een random snelheid wordt gekozen en een safety check controleert of de minimum snelheid niet groter is dan de maximum snelheid.
-
-Update():
-    Deze functie zorgt voor de beweging van het obstakel. Het zorgt ervoor dat het obstakel verwijderd wordt indien endX (5) wordt bereikt.
+###### ObstacleController.cs:
 
 
-####  JumperAgent.cs
+Dit script zorgt voor het gedrag van een individueel obstakel.
+Het zorgt ervoor dat het obstakel aan een random gekozen snelheid binnen een minimum en een maximum, beweegt. Wanneer het obstakel op een eindpunt komt, zorgt het dat de agent een beloning krijgt en dan vernietigd het zichzelf.
 
 
-Dit script is de agent. Het wordt gebruikt voor het trainen van de agent.
-
-Initialize():
-    Wordt aangeroepen wanneer de agent start. Krijgt de rigidbody component en de initiële positie.
-
-OnEpisodeBegin():
-    Reset de positie en snelheid van de agent. Vernietigt bestaande obstakels.
-
-CollectObservations(VectorSensor sensor):
-    Indien er problemen zijn met de ray perception sensor, kunnen de lijnen code hier geuncomment worden om de agent alles te laten weten.
-
-OnActionReceived(ActionBuffers actions):
-    Er wordt nagekeken of de agent op de grond staat.
-    De actie wordt gelezen. De agent heeft twee mogelijke acties: niets doen en springen.
-    Als de actie 1 is en de agent staat op de grond, dan wordt er een opwaardse kracht uitgevoerd.
-    Er wordt in elke step een kleine beloning gegeven voor het overleven.
-
-Heuristic(in ActionBuffers actionsOut):
-    Er wordt hier gezorgd dat de agent manueel getest kan worden (spacebar om te springen).
-
-OnCollisionEnter(Collision collision):
-    Indien er een botsing plaatsvindt tussen de agent en het obstakel, wordt de episode beëindigd en krijgt de agent een straf.
-
-OnDrawGizmosSelected():
-    Helpt developers om tijdens het trainen te kijken of de agent op de grond staat.
-
-###  Behaviour
-
+### Behaviors
 
 behaviors:
   JumperAgent:
@@ -90,13 +54,13 @@ behaviors:
     hyperparameters:
       batch_size: 512
       buffer_size: 20480
-      learning_rate: 1.0e-5
+      learning_rate: 3.0e-4
       beta: 5.0e-4
       epsilon: 0.2
       lambd: 0.95
-      num_epoch: 10
+      num_epoch: 4
       learning_rate_schedule: linear
-      beta_schedule: constant
+      beta_schedule: linear
       epsilon_schedule: linear
     network_settings:
       normalize: true
@@ -106,31 +70,36 @@ behaviors:
       extrinsic:
         gamma: 0.99
         strength: 1.0
-    max_steps: 5000000
+    max_steps: 100000000
     time_horizon: 256
-    summary_freq: 2000
+    summary_freq: 250
+
+Bij het kiezen van de behaviors probeerde ik een stabiele leercurve te bekomen. Dit bleek helaas veel moeilijker dan gedacht.
+Ik koos voor lineaire schedules om te proberen ervoor te zorgen dat de agent, naarmate dat deze meer bijleerde en dus dichter bij een optimum komt, minder random zal gaan zoeken.
 
 
-Om een zo optimaal mogelijke curve te bekomen experimenteerde ik wat met de behaviours.
+### Omgeving
 
 
-###  Unity omgeving
+De unity omgeving bestaat uit 6 training areas.
+De training area prefab bevat een groundplane, een agent, een obstakel-spawnpoint en een . Om de scripts te laten werken, voegde ik in de unity settings een 'ground' layer en een 'obstacle' layer toe, en maakte ik een 'Obstacle' tag aan.
+Bij de agent voegde ik een maximum aantal steps van 3500 per episode toe, dit zorgt ervoor dat een agent tijdens het trainen niet in een eindeloze looping terecht komt.
 
 
-Ik plaatste 6 trainingsomgevingen boven elkaar.
-En trainingsomgeving bestaat uit een empty gameobject als parent, met als child objects een Floor object, dat aan een custom layer 'Ground' wordt toegevoegd; een Agent object; een ObstacleSpawner (empty) object; een ObstacleSpawnPoint (empty) object, dit object wordt geplaatst waar het obstacle ingespawned moet worden.
-
-De Agent is een cube object met een empty gameobject GroundCheck, dat net onder het onderste vlak van de cube staat. De Agent krijgt een box collider en een rigidbody (met freeze position x en z, en freeze rotation x, y en z.).
-Het JumperAgent.cs script wordt toegevoegd aan de agent en we selecteren bij Ground Layer de custom layer 'Ground', en bij Ground Check voegen we het GroundCheck gameobject toe. Ik zette de max steps op 2000.
-
-We hebben ook een obstacle prefab. Aan het obstacle hangt het ObstacleController.cs script.
-
-Aan het ObstacleSpawner object voegen we het ObstacleSpawner.cs script toe.
+## Resultaten
 
 
-##  Resultaten en conclusies
+De grafieken werden als .png afbeeldingen bijgevoegd. Ik trainde mijn agent tot 20 miljoen steps.
+Bij de cumulative rewards kunnen we zien dat de groei eerst goed zit, maar na een 4 miljoen steps bereikt het de hoogste top van de grafiek, om daarna volledig in te storten en niet meer eenzelfde hoogtepunt te bereiken. Deze trend kunnen we ook in de andere grafieken terugvinden.
+De learning rate daalt eerst heel mooi, maar begint vervolgens terug te stijgen. Trends zoals deze kunnen we ook in andere grafieken terugvinden.
+De entropie blijft een dalende lijn.
 
 
-We zien dat de grafieken wel degelijk steigen, maar er zit wel een instabiliteit in. Deze instabiliteit lijkt op een soort ruis die mee steigt met de grafiek.
-Vermoedelijk komt de instabiliteit door, onder andere, twee obstakels die elkaar kort opvolgen, waardoor de agent, die rays gebruikt om de omgeving te observeren, het tweede obstakel niet ziet aankomen en geen correcte timing van de jump kan inschatten.
-De instabileit is waarschijnlijk ook te danken aan het feit dat een episode enkel eindigt wanneer de agent een obstakel aanraakt of pas na 2000 steps. Dit zorgt ervoor dat we de agent moeten belonen voor het overleven, wat moeilijker is dan gewoon de episode te beëindigen wanneer het obstakel op zijn bestemming komt zonder collision. We kunnen dus stellen dat, ondanks de houterige training, de agent wel bijleert, langzaam maar zeker. Een video van de training kan gevonden worden in de assets directory (ik kreeg geen toegang tot de panopto directory). Na ongeveer 4h werd een platform bereikt.
+## Conclusie
+
+
+Initieel leert de agent om over de obstakels te springen, dit loopt goed, maar de training stort na 4 miljoen steps volledig in elkaar en bereikt nooit meer eenzelfde hoogtepunt.
+Deze resultaten geven mij de indruk dat er iets mis is met mijn reward systeem. Mijn vermoeden is dat het probleem zich stelt bij het feit dat een obstakel waar de agent mee botst nog altijd doorgaat naar het einde en een beloning veroorzaakt. Dit zou weleens een cruciale fout kunnen zijn die ervoor zorgt dat de agent leert dat hij niet gestraft wordt voor het botsen. Daarom moet er ervoor gezorgd worden dat in het script, de obstakeles bij een botsing verwijderd worden.
+Aangezien de entropie blijft dalen, wordt onze agent steeds meer deterministisch. Doordat de agent na de 4 miljoen steps een slechte 'gedachtengang' heeft geleerd (dat een obstakel raken niet zo erg is), maar hij steeds minder random acties zal gaan uitvoeren, blijft de agent in deze slechte 'gedachtengang' zitten en kan het niet meer op een evenhoog of hoger hoogtepunt geraken.
+
+We kunnen stellen dat de training gefaald is in het bereiken van een stabiele curve en consistent goede punten te halen. Het experiment zorgde er wel voor dat ik meer inzicht begin te krijgen in de betekenis van de verschillende grafieken en behaviors/hyperparameters. De resultaten van de finale training staan bij beta_3. U kan de video (16sec) van de training vinden in de assets folder.

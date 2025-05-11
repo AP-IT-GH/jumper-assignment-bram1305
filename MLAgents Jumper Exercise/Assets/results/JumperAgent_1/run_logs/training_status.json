@@ -1,0 +1,65 @@
+{
+    "JumperAgent": {
+        "checkpoints": [
+            {
+                "steps": 100006,
+                "file_path": "results\\JumperAgent_1\\JumperAgent\\JumperAgent-100006.onnx",
+                "reward": null,
+                "creation_time": 1746400157.29325,
+                "auxillary_file_paths": [
+                    "results\\JumperAgent_1\\JumperAgent\\JumperAgent-100006.pt"
+                ]
+            },
+            {
+                "steps": 101477,
+                "file_path": "results\\JumperAgent_1\\JumperAgent\\JumperAgent-101477.onnx",
+                "reward": -0.004999935626983643,
+                "creation_time": 1746400294.4138184,
+                "auxillary_file_paths": [
+                    "results\\JumperAgent_1\\JumperAgent\\JumperAgent-101477.pt"
+                ]
+            },
+            {
+                "steps": 115067,
+                "file_path": "results\\JumperAgent_1\\JumperAgent\\JumperAgent-115067.onnx",
+                "reward": -0.04499995708465576,
+                "creation_time": 1746401016.165404,
+                "auxillary_file_paths": [
+                    "results\\JumperAgent_1\\JumperAgent\\JumperAgent-115067.pt"
+                ]
+            },
+            {
+                "steps": 164963,
+                "file_path": "results\\JumperAgent_1\\JumperAgent\\JumperAgent-164963.onnx",
+                "reward": null,
+                "creation_time": 1746401806.2405603,
+                "auxillary_file_paths": [
+                    "results\\JumperAgent_1\\JumperAgent\\JumperAgent-164963.pt"
+                ]
+            },
+            {
+                "steps": 229102,
+                "file_path": "results\\JumperAgent_1\\JumperAgent\\JumperAgent-229102.onnx",
+                "reward": 1.4160910844802856,
+                "creation_time": 1746402474.4364448,
+                "auxillary_file_paths": [
+                    "results\\JumperAgent_1\\JumperAgent\\JumperAgent-229102.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 229102,
+            "file_path": "results\\JumperAgent_1\\JumperAgent.onnx",
+            "reward": 1.4160910844802856,
+            "creation_time": 1746402474.4364448,
+            "auxillary_file_paths": [
+                "results\\JumperAgent_1\\JumperAgent\\JumperAgent-229102.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "2.6.0+cu118"
+    }
+}

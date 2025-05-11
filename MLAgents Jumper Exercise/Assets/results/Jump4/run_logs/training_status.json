@@ -1,0 +1,29 @@
+{
+    "JumperAgent": {
+        "checkpoints": [
+            {
+                "steps": 246000,
+                "file_path": "results\\Jump4\\JumperAgent\\JumperAgent-246000.onnx",
+                "reward": -2.880952380952381,
+                "creation_time": 1746837458.5928607,
+                "auxillary_file_paths": [
+                    "results\\Jump4\\JumperAgent\\JumperAgent-246000.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 246000,
+            "file_path": "results\\Jump4\\JumperAgent.onnx",
+            "reward": -2.880952380952381,
+            "creation_time": 1746837458.5928607,
+            "auxillary_file_paths": [
+                "results\\Jump4\\JumperAgent\\JumperAgent-246000.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "2.6.0+cu118"
+    }
+}

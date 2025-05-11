@@ -5,12 +5,12 @@ using UnityEngine;
 public class ObstacleController : MonoBehaviour
 {
     [SerializeField] private float endX = 5f;
-    [SerializeField] private float minSpeed = 1f; // minimum speed limit
-    [SerializeField] private float maxSpeed = 5f; // maximum speed limit
-    private Vector3 initialPosition;
-    private bool moving = false;
+    [SerializeField] private float minSpeed = 1f;
+    [SerializeField] private float maxSpeed = 5f;
     private float currentSpeed;
 
+    // Callback invoked when obstacle reaches end
+    public System.Action OnObstacleReachedEnd;
 
     void Start()
     {
@@ -24,18 +24,16 @@ public class ObstacleController : MonoBehaviour
         {
             Debug.LogWarning("ObstacleController: Initial speed is zero or negative. Obstacle may not move correctly.", this);
         }
-
     }
 
     void Update()
     {
-        // Move towards endX position using current instance's speed
         transform.position += Vector3.right * currentSpeed * Time.deltaTime;
 
-        // Check obstacle has passed end position
         if (transform.position.x >= endX)
         {
-            // Destroy itself when end reached
+            // Invoke callback before destroying the object
+            OnObstacleReachedEnd?.Invoke();
             Destroy(gameObject);
         }
     }

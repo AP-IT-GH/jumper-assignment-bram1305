@@ -218,8 +218,9 @@ MonoBehaviour:
   spawnX: -10
   spawnPoint: {fileID: 7176934613146779637}
   initialSpawnDelay: 1
-  minSpawnInterval: 2
-  maxSpawnInterval: 3
+  minSpawnInterval: 5
+  maxSpawnInterval: 10
+  agentToNotify: {fileID: 4337866616972168971}
 --- !u!1 &4850661866870226532
 GameObject:
   m_ObjectHideFlags: 0
@@ -380,7 +381,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 2000
+  MaxStep: 3500
   jumpForce: 5
   groundCheck: {fileID: 6005738617602308994}
   groundLayer:
@@ -388,7 +389,8 @@ MonoBehaviour:
     m_Bits: 8
   groundCheckRadius: 0.1
   touchPunishment: -1
-  survivalReward: 0.01
+  obstacleClearedReward: 1
+  obstacleSpawner: {fileID: 6681986210738002023}
 --- !u!114 &6411366239203852503
 MonoBehaviour:
   m_ObjectHideFlags: 0
